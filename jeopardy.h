@@ -45,10 +45,12 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& outs, const Jeopardy &rhs) { //output
-		for(size_t i = 0; i < rhs.question.size(); i++){
-        	if( rhs.question.at(i) == '\\' and rhs.question.at(i+1) == 'n'){
-				outs << std::endl; }
-			else{ outs << rhs.question.at(i);} //still prints out the n
+		for(size_t i = 0; i < rhs.question.size(); ++i){
+        	if( rhs.question.substr(i,2) == "\\n"){
+				outs << '\n';
+				++i;
+			}
+			else{ outs << rhs.question.at(i);} 
 		}
 		outs << std::endl;
 		/*outs << rhs.right_answer1 << std::endl;
