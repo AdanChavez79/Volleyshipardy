@@ -35,11 +35,7 @@ public:
     string get_answer4() const {return answer4;}
 	
 	friend std::istream& operator>>(std::istream& ins, Jeopardy &rhs) { //input
-		//string full_question;
     	getline(ins, rhs.question, '\n');
-		//std::regex target("(\n)+"); //trying to replace the \n in the string with an actual endline, not working
-    	//string replacement = " ";
-    	//rhs.question = std::regex_replace(full_question, target, replacement);
     	getline(ins, rhs.right_answer1, '\n');
 		getline(ins, rhs.answer2, '\n');
         getline(ins, rhs.answer3, '\n');
@@ -49,6 +45,16 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& outs, const Jeopardy &rhs) { //output
-        return outs << rhs.question << std::endl <<"A. " << rhs.right_answer1 << std::endl << "B. " << rhs.answer2 << std::endl << "C. " << rhs.answer3 << std::endl << "D. "<< rhs.answer4 << std::endl <<std::endl;
+		for(size_t i = 0; i < rhs.question.size(); i++){
+        	if( rhs.question.at(i) == '\\' and rhs.question.at(i+1) == 'n'){
+				outs << std::endl; }
+			else{ outs << rhs.question.at(i);} //still prints out the n
+		}
+		outs << std::endl;
+		/*outs << rhs.right_answer1 << std::endl;
+		outs << rhs.answer2 << std::endl;
+		outs << rhs.answer3 << std::endl;
+		outs << rhs.answer4 << std::endl << std::endl;*/
+		return outs;
     }
 };
