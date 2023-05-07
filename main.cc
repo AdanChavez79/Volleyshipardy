@@ -9,27 +9,19 @@
 
 using namespace std;
 
-//1. Replace string \n with actual endline
-//2. Userface
-//3. Print questions and answers randomly
-//4. A way to win the game
-
 int main(){
  Jeopardy info;
  int key = 0;
  unordered_map<int,Jeopardy> database;
  database.reserve(1'000'000);
 
- ifstream ins("questions.txt");
+ ifstream ins("questions.txt"); //reading file into a hash
  	while(ins){
     ins>>info;
     if(!ins){break;}    
-    database.insert({key,{info}});
+    database.insert({key,{info}}); //key = int, info = Jeopardy data
     key++;
 }
-/*for (auto x : database){
-    cout << x.second;
-}*/
 
  srand(time(0));
  int count = 1, win = 0, lose = 0;
@@ -124,13 +116,12 @@ int main(){
 		}
 	}
 	
-	if(win == 5) { //change? 
+	if(win == 5) { //Way to win the game -> change? 
 		cout<<"YOU WIN"<<endl;
 		cout<<"CORRECT: "<<win<<endl;
 		cout<<"WRONG: "<<lose<<endl;
 		break;
 	}
-	if(count == 93) {break;} //94 questions in total
 	count++;
 	}
 
