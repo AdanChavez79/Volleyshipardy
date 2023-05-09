@@ -12,7 +12,6 @@
 #include <string>
 #include<chrono>
 #include <boost/asio.hpp>
-//#include"player.h"
 #include"jeopardy.h"
 using namespace std;
 using boost::asio::ip::tcp;
