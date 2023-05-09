@@ -1,4 +1,4 @@
-in plain English, what is this line of code doing?\nfloat number = 3.5;\n
+In plain English, what is this line of code doing?\nfloat number = 3.5;\n
 It is making a variable named "number" of type "float" with a value of 3.5
 It is making a variable named "number" of type "int" with a value of 3.5
 It is making a variable of type "number" and also type "float" with a value of 3.5
@@ -561,3 +561,4 @@ It will print the name backwards instead of forwards
 It will run into an infinite loop
 It will only print the last letter of the name
 It will fail to compile
+

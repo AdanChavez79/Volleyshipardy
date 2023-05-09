@@ -1,16 +1,11 @@
-#include<unordered_map>
-#include<fstream>
-#include<cstdlib>
-#include<time.h>
-#include<iomanip>
 #include"jeopardy.h"
-#include"/public/colors.h"
-#include"/public/read.h"
 
 using namespace std;
 
 int main(){
- Jeopardy info;
+	Jeopardy j;
+	j.jeopardy_machine();
+/* Jeopardy info;
  int key = 0;
  unordered_map<int,Jeopardy> database;
  database.reserve(1'000'000);
@@ -65,11 +60,11 @@ int main(){
 		cout<<"D. "<<wrong3<<endl;
 		char answer = read("Please enter a letter: \n");
 		if(answer == 'B'){ 
-			cout<<"CORRECT"<<endl;
+		cout<<"CORRECT"<<endl<<endl;
 			win++;
 		}
         else{ 
-			cout<<"WRONG"<<endl; 
+			cout<<"WRONG"<<endl<<endl; 
 			lose++;
 		}
 	}else if(random_question == 3){
@@ -79,11 +74,11 @@ int main(){
 		cout<<"D. "<<wrong1<<endl;
 		char answer = read("Please enter a letter: \n");
 		if(answer == 'C'){ 
-			cout<<"CORRECT"<<endl;
+			cout<<"CORRECT"<<endl<<endl;
 			win++;
 		}
         else{ 
-			cout<<"WRONG"<<endl;
+			cout<<"WRONG"<<endl<<endl;
 			lose++;
 		}
 	}else if(random_question == 4){
@@ -93,11 +88,11 @@ int main(){
 		cout<<"D. "<<correct<<endl;
 		char answer = read("Please enter a letter: \n");
 		if(answer == 'D'){ 
-			cout<<"CORRECT"<<endl;
+			cout<<"CORRECT"<<endl<<endl;
 			win++;
 		}
         else{ 
-			cout<<"WRONG"<<endl; 
+			cout<<"WRONG"<<endl<<endl; 
 			lose++;
 		}
 	}else{
@@ -107,11 +102,11 @@ int main(){
 		cout<<"D. "<<wrong2<<endl;
 		char answer = read("Please enter a letter: \n");
 		if(answer == 'C'){ 
-			cout<<"CORRECT"<<endl;
+			cout<<"CORRECT"<<endl<<endl;
 			win++;
 		}
         else{ 
-			cout<<"WRONG"<<endl; 
+			cout<<"WRONG"<<endl<<endl; 
 			lose++;
 		}
 	}
@@ -123,7 +118,7 @@ int main(){
 		break;
 	}
 	count++;
-	}
+	}*/
 
 return 0;
 }
