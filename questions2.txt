@@ -1,0 +1,6 @@
+How many times will this function run if x is passed in as 10 on the initial call?\nint foo(int x) {\nreturn x + foo(x-1);\n}
+Infinite (until it crashes at least)
+9
+1
+10
+

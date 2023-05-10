@@ -24,6 +24,7 @@ class Jeopardy{
 		string answer4;
 		string dummy;
 		float time_to_beat = 0.0;
+		float old_time = 0.0;
 		string answer = "wrong";
 	public:
 
@@ -46,9 +47,13 @@ class Jeopardy{
 		string get_answer4() const {return answer4;}
 		string get_answer() const {return answer;}
 		float get_time_to_beat() const{return time_to_beat;}
+		float get_old_time() const {return old_time;}
 
 		void set_time_to_beat(float clock){
 			time_to_beat = (clock*0.001);
+		}
+		void set_old_time(float old){
+			old_time = old;
 		}
 		void set_answer(string a){
 			answer = a;
@@ -62,7 +67,7 @@ class Jeopardy{
 			typedef std::chrono::high_resolution_clock clock;
 			auto end = clock::now();
 
-			std::ifstream ins("questions.txt"); //reading file into a hash
+			std::ifstream ins("questions2.txt"); //reading file into a hash
 			while(ins){
 				ins>>info;
 				if(!ins){break;}
