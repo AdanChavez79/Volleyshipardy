@@ -29,17 +29,9 @@ void print_grid(vector<vector<char>>&grid){
 	cout<<endl;
 }
 
-bool search_grid(vector<vector<char>>grid, vector<vector<char>>grid2){
-	const int size = grid.size();
-	for(int i = 0; i < size; i++){
-		for(int j = 0; j < size; j++){
-			if(grid.at(i).at(j) == '*' and grid2.at(i).at(j) == '*'){
-				return true;
-			}else{ return false;}
-		}
-	}
-
-	return false;
+bool search_grid(int col, int row, const vector<vector<char>>&grid){
+     if(grid.at(row).at(col) == '*'){ return true;}
+	 return false;
 }
 
 int main(){
@@ -96,20 +88,21 @@ int main(){
 	if(count >=1 ){break;}
 	count++;
 }
- 
+ 	
+	count = 0;
 	while(true){ //game time
 		if(count > 1){count = 0;}
 		if(count == 0){player = "ONE";}
     	else{ player = "TWO";}
     	cout<<setw(10)<<"PLAYER "<<player<<"'S TURN..."<<endl;
     	if(count == 0){
-			cout<<setw(10)<<"Your ocean grid: "<<endl;
+			cout<<setw(15)<<"Your ocean grid: "<<endl;
 			print_grid(grid_player_one);
 			cout<<setw(10)<<"Opponent's ocean grid: "<<endl;
 			print_grid(grid_opponent_two);
 		}
     	else{ 
-			cout<<setw(10)<<"Your ocean grid: "<<endl;
+			cout<<setw(15)<<"Your ocean grid: "<<endl;
             print_grid(grid_player_two);
             cout<<setw(10)<<"Opponent's ocean grid: "<<endl;
 			print_grid(grid_opponent_one);
@@ -122,18 +115,18 @@ int main(){
 			column-=1;
 			row-=1;
 			 if(count == 0){
-				 grid_opponent_two.at(row).at(column) = '*'; 
-				 if(search_grid(grid_opponent_two, grid_player_two)){ //compares player two's grid and player one's game grid
+				 if(search_grid(column, row, grid_player_two)){ //player one's turn
 				 	grid_opponent_two.at(row).at(column) = '@';
+					grid_player_two.at(row).at(column) = 'X';
 				 	cout<<"You got a hit!"<<endl;
 				 }else{
 					grid_opponent_two.at(row).at(column) = 'X';
 					cout<<"You missed!"<<endl;
 				 }
 			 }else{ 
-				 grid_opponent_one.at(row).at(column) = '*';
-                 if(search_grid(grid_opponent_one, grid_player_one)){ 
+                 if(search_grid(column, row, grid_player_one)){ //player two's turn
                     grid_opponent_one.at(row).at(column) = '@';
+					 grid_player_one.at(row).at(column) = 'X';
                     cout<<"Yout got a hit!"<<endl;
 				 }else{
                     grid_opponent_one.at(row).at(column) = 'X';
