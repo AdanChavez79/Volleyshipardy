@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void print2d(vector<vector<char>>& vec){
+/*void print2d(vector<vector<char>>& vec){
 	cout << "  ";
 	for (size_t z = 0 ; z < vec.size(); z++){
 		cout << z + 1  << " ";
@@ -18,7 +18,7 @@ void print2d(vector<vector<char>>& vec){
 		}
 		cout << endl;
 	}
-}
+}*/
 
 
 
@@ -26,23 +26,6 @@ void print2d(vector<vector<char>>& vec){
 int main(){
 	//	Jeopardy j;
 	//	j.jeopardy_machine();
-
-	vector<vector<char>> grid (10, vector<char> (10, '~'));
-
-	print2d(grid);
-
-	int x;
-	cout << "Enter a row to hit " << endl;
-	cin >> x ;
-	cout << "Enter a column to hit" << endl;
-	int y;
-	cin >> y;
-
-	grid[x-1][y-1] = '*';
-	print2d(grid);
-
-return 0;
-}
 
 
 
