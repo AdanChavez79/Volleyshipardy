@@ -11,6 +11,12 @@ using namespace std;
 //2.Can't have the player put in the same coordinates
 //3.Need to read in coordinates like D4
 
+
+struct Coord {
+    int column;
+    int row;
+};
+
 void print_grid(vector<vector<char>>&grid){
 	cout << "  ";
 	for (size_t z = 0 ; z < grid.size(); z++){
@@ -34,6 +40,50 @@ bool search_grid(int col, int row, const vector<vector<char>>&grid){
 	 return false;
 }
 
+//How to use:
+//Coord x
+//x = readCoordinate;
+//User types A7
+//x.column now holds 7
+//x.row now holds 1
+
+Coord readCoordinate(){
+	bool goodInput = false;
+	int r;
+	int c;
+	
+	while(goodInput == false){
+		string input = read("Enter coordinate: ");
+		//Vetting
+		if(isalpha(input[1]) == false and input[0] >= 'A' and input[0] <= 'J'  and input[1] != '0'){
+			if(input.size() == 2){
+				r = input[0] - 'A' + 1;
+				c = stoi(input.substr(1));
+				goodInput = true;
+			} else if (input.size() == 3 ){
+				if(input[2] == '0'){
+					r = input[0] - 'A' + 1;
+                	c = 10;
+                	goodInput = true;
+				}
+			}
+			cout << "BAD INPUT" << endl;
+
+		}else {
+			cout << "BAD INPUT" << endl;
+		}
+	}
+
+	Coord x;
+	x.column = c -1; 
+	x.row = r - 1;
+	cout << "GOOD INPUT" << endl;	
+	return x;
+
+}
+
+
+
 int main(){
 	//vector<vector<char>>grid(10, vector<char> (10, '~'));
 	vector<vector<char>>grid_player_one(10,vector<char>(10,'~')); //player one's grid
@@ -56,31 +106,37 @@ int main(){
 	if(count == 0){ print_grid(grid_player_one);}
     else{ print_grid(grid_player_two);}
 	cout<<"PLAYER "<<player<<" please place your DESTROYER (2 spots)"<<endl;
-	for(int i = 0; i < 2; i++){	
-		int column = read("Enter a column: ");
-		int row = read("Enter a row: ");
-		column-=1;
-		row-=1;
-		if(count == 0){grid_player_one.at(row).at(column) = '*';}
-        else{ grid_player_two.at(row).at(column) = '*';}
+	for(int i = 0; i < 2; i++){
+//		int column = read("Enter a column: ");
+//		int row = read("Enter a row: ");
+//		column-=1;
+//		row-=1;
+		Coord c;
+		c = readCoordinate();
+		if(count == 0){grid_player_one.at(c.row).at(c.column) = '*';}
+        else{ grid_player_two.at(c.row).at(c.column) = '*';}
 	}
 	cout<<"PLAYER "<<player<<" please place your CRUSIER (3 spots)"<<endl;
 	for(int i = 0; i < 3; i++){
-		int column = read("Enter a column: ");
-        int row = read("Enter a row: ");
-		column-=1;
-		row-=1;
-        if(count == 0){grid_player_one.at(row).at(column) = '*';}
-        else{ grid_player_two.at(row).at(column) = '*';}
+//		int column = read("Enter a column: ");
+//      int row = read("Enter a row: ");
+//		column-=1;
+//		row-=1;
+		Coord c;
+		c = readCoordinate();
+        if(count == 0){grid_player_one.at(c.row).at(c.column) = '*';}
+        else{ grid_player_two.at(c.row).at(c.column) = '*';}
 	}
 	cout<<"PLAYER "<<player<<" please place your BATTLESHIP (4 spots)"<<endl;
 	for(int i = 0; i < 4; i++){
-        int column = read("Enter a column: ");
-        int row = read("Enter a row: ");
-		column-=1;
-		row-=1;
-        if(count == 0){grid_player_one.at(row).at(column) = '*';}
-		else{ grid_player_two.at(row).at(column) = '*';}
+//		int column = read("Enter a column: ");
+//		int row = read("Enter a row: ");
+//		column-=1;
+//		row-=1;
+		Coord c;
+		c = readCoordinate();
+        if(count == 0){grid_player_one.at(c.row).at(c.column) = '*';}
+		else{ grid_player_two.at(c.row).at(c.column) = '*';}
     }
 	cout<<setw(5)<<"PLAYER "<<player<<"'S ocean grid"<<endl;
 	if(count == 0){ print_grid(grid_player_one);}
@@ -110,26 +166,28 @@ int main(){
 		cout<<"You get three shots to hit your opponent's ships"<<endl;
 		for(int i = 0; i < 3; i++){
 			cout<<"Enter the coordinates for shot "<<i+1<<endl;
-			int column = read("Enter a column: ");
-			int row = read("Enter a row: ");
-			column-=1;
-			row-=1;
+	//		int column = read("Enter a column: ");
+	//		int row = read("Enter a row: ");
+	//		column-=1;
+	//		row-=1;
+			Coord z;
+        	z = readCoordinate();
 			 if(count == 0){
-				 if(search_grid(column, row, grid_player_two)){ //player one's turn
-				 	grid_opponent_two.at(row).at(column) = '@';
-					grid_player_two.at(row).at(column) = 'X';
+				 if(search_grid(z.column, z.row, grid_player_two)){ //player one's turn
+				 	grid_opponent_two.at(z.row).at(z.column) = '@';
+					grid_player_two.at(z.row).at(z.column) = 'X';
 				 	cout<<"You got a hit!"<<endl;
 				 }else{
-					grid_opponent_two.at(row).at(column) = 'X';
+					grid_opponent_two.at(z.row).at(z.column) = 'X';
 					cout<<"You missed!"<<endl;
 				 }
 			 }else{ 
-                 if(search_grid(column, row, grid_player_one)){ //player two's turn
-                    grid_opponent_one.at(row).at(column) = '@';
-					 grid_player_one.at(row).at(column) = 'X';
+                 if(search_grid(z.column, z.row, grid_player_one)){ //player two's turn
+                    grid_opponent_one.at(z.row).at(z.column) = '@';
+					 grid_player_one.at(z.row).at(z.column) = 'X';
                     cout<<"Yout got a hit!"<<endl;
 				 }else{
-                    grid_opponent_one.at(row).at(column) = 'X';
+                    grid_opponent_one.at(z.row).at(z.column) = 'X';
                     cout<<"You missed!"<<endl;
                  	}
 				}

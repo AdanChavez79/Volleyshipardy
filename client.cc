@@ -68,9 +68,9 @@ int main(int argc, char* argv[])
 				s<<"WRONG";
 				return 0;
 			}/*else{
-				battleship stuff	
-		 	}
-			*/
+			   battleship stuff	
+			   }
+			   */
 			cout<<"Time taken to answer: "<<jeopardy.get_time_to_beat()<<" seconds"<<endl<<endl;
 			new_time = jeopardy.get_time_to_beat(); //plaer two's time
 			if(new_time > old_time){
@@ -78,8 +78,8 @@ int main(int argc, char* argv[])
 				cout<<"PLAYER ONE WINS"<<endl;
 				s<<"LONG";
 				return 0;
-				} 
-		 	s<<"Time to beat: "<<new_time<<" seconds\n";
+			} 
+			s<<"Time to beat: "<<new_time<<" seconds\n";
 		}	
 	}
 
