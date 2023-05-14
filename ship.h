@@ -50,8 +50,10 @@ void print_grid(vector<vector<char>>&grid){
     cout<<endl;
 }
 
-bool search_grid(int col, int row, const vector<vector<char>>&grid){
-     if(grid.at(row).at(col) == '*'){ return true;}
+bool search_grid(int col, int row, vector<vector<char>>&grid){
+	if(grid.at(row).at(col) == '*'){
+		grid_opponent.at(row).at(col) = 'X';
+		return true; }
      return false;
 }
 
