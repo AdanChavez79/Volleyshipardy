@@ -47,6 +47,7 @@ bool search_grid(int col, int row, const vector<vector<char>>&grid){
 //x.column now holds 7
 //x.row now holds 1
 
+
 vector<string> pastInputs;
 vector<string> pastInputs2;
 
