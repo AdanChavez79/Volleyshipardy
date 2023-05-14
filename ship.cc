@@ -7,9 +7,9 @@ using namespace std;
 
 //Battleship problems:
 //1.Need to make sure the ship parts are lined up correctly
-//i.a. can't have a ship have a loc at (10,1) and (1,1)
 //2.Can't have the player put in the same coordinates
-//3.Need to read in coordinates like D4
+
+//i.a. can't have a ship have a loc at (10,1) and (1,1)
 
 
 struct Coord {
@@ -47,14 +47,17 @@ bool search_grid(int col, int row, const vector<vector<char>>&grid){
 //x.column now holds 7
 //x.row now holds 1
 
-Coord readCoordinate(){
+vector<string> pastInputs;
+vector<string> pastInputs2;
+
+Coord readCoordinate(int count){
 	bool goodInput = false;
 	int r;
 	int c;
 	
 	while(goodInput == false){
 		string input = read("Enter coordinate: ");
-		//Vetting
+		//Vetting 
 		if(isalpha(input[1]) == false and input[0] >= 'A' and input[0] <= 'J'  and input[1] != '0'){
 			if(input.size() == 2){
 				r = input[0] - 'A' + 1;
@@ -67,11 +70,36 @@ Coord readCoordinate(){
                 	goodInput = true;
 				}
 			}
-			cout << "BAD INPUT" << endl;
+			if(input.size() == 3 and input[2] != '0'){
+				goodInput = false;
+				cout << "BAD INPUT" << endl;
+			}
 
 		}else {
+			goodInput = false;
 			cout << "BAD INPUT" << endl;
 		}
+
+		if(goodInput == true and count == 0){
+			if(find(pastInputs.begin(), pastInputs.end(), input) != pastInputs.end()){
+				cout << "You already entered this >:[ " << endl;
+				goodInput = false;
+			} else {
+				pastInputs.push_back(input);
+			}
+		}
+
+		if(goodInput == true and count == 1){
+            if(find(pastInputs2.begin(), pastInputs2.end(), input) != pastInputs2.end()){
+                cout << "You already entered this >:[ " << endl;
+                goodInput = false;
+            } else {
+                pastInputs2.push_back(input);
+            }
+        }
+
+
+
 	}
 
 	Coord x;
@@ -112,7 +140,7 @@ int main(){
 //		column-=1;
 //		row-=1;
 		Coord c;
-		c = readCoordinate();
+		c = readCoordinate(count);
 		if(count == 0){grid_player_one.at(c.row).at(c.column) = '*';}
         else{ grid_player_two.at(c.row).at(c.column) = '*';}
 	}
@@ -123,7 +151,7 @@ int main(){
 //		column-=1;
 //		row-=1;
 		Coord c;
-		c = readCoordinate();
+		c = readCoordinate(count);
         if(count == 0){grid_player_one.at(c.row).at(c.column) = '*';}
         else{ grid_player_two.at(c.row).at(c.column) = '*';}
 	}
@@ -134,7 +162,7 @@ int main(){
 //		column-=1;
 //		row-=1;
 		Coord c;
-		c = readCoordinate();
+		c = readCoordinate(count);
         if(count == 0){grid_player_one.at(c.row).at(c.column) = '*';}
 		else{ grid_player_two.at(c.row).at(c.column) = '*';}
     }
@@ -144,7 +172,9 @@ int main(){
 	if(count >=1 ){break;}
 	count++;
 }
- 	
+ 	pastInputs.clear();
+	pastInputs2.clear();
+
 	count = 0;
 	while(true){ //game time
 		if(count > 1){count = 0;}
@@ -170,8 +200,9 @@ int main(){
 	//		int row = read("Enter a row: ");
 	//		column-=1;
 	//		row-=1;
+
 			Coord z;
-        	z = readCoordinate();
+        	z = readCoordinate(count);
 			 if(count == 0){
 				 if(search_grid(z.column, z.row, grid_player_two)){ //player one's turn
 				 	grid_opponent_two.at(z.row).at(z.column) = '@';

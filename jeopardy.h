@@ -67,7 +67,7 @@ class Jeopardy{
 			typedef std::chrono::high_resolution_clock clock;
 			auto end = clock::now();
 
-			std::ifstream ins("questions2.txt"); //reading file into a hash
+			std::ifstream ins("questions.txt"); //reading file into a hash
 			while(ins){
 				ins>>info;
 				if(!ins){break;}
