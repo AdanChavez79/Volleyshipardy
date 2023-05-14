@@ -1,7 +1,7 @@
 #include<iostream>
 #include<iomanip>
 #include<vector>
-#include"/public/read.h"
+#include"read.h"
 
 using namespace std;
 

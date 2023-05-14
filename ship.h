@@ -1,7 +1,7 @@
 #include<iostream>
 #include<iomanip>
 #include<vector>
-#include"/public/read.h"
+#include"read.h"
 
 using std::string;
 using std::cout;
@@ -26,6 +26,8 @@ class Battleship{
 	void set_grid_opponent(vector<vector<char>>grid){
 		grid_opponent = grid;
 	}
+
+// Huh, Its usually X an Y, not really columns and rows
 
 struct Coord {
     int column;

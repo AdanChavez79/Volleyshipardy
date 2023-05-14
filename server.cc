@@ -12,9 +12,10 @@
 #include <iostream>
 #include <string>
 #include <boost/asio.hpp>
-#include "/public/read.h"
-#include"common.h"
-#include"ship.h"
+#include "read.h"
+#include "common.h"
+#include "ship.h"
+#include "jeopardy.h"
 using namespace std;
 using boost::asio::ip::tcp;
 

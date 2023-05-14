@@ -7,14 +7,15 @@
 #include<time.h>
 #include<chrono>
 #include<iomanip>
-#include"/public/colors.h"
-#include"/public/read.h"
+#include"colors.h"
+#include"read.h"
 using std::string;
 using std::endl;
 using std::chrono::duration_cast;
 using std::chrono::milliseconds;
 
-
+// Generally, 
+// We would have a question class and another class with database in it.
 class Jeopardy{
 	private:
 		string question;
@@ -62,6 +63,7 @@ class Jeopardy{
 		void jeopardy_machine(){
 			Jeopardy info;
 			int key = 0;
+			// Wait what
 			std::unordered_map<int,Jeopardy> database;
 			database.reserve(1'000'000);
 			typedef std::chrono::high_resolution_clock clock;
