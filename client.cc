@@ -12,7 +12,8 @@
 #include <string>
 #include<chrono>
 #include <boost/asio.hpp>
-#include"jeopardy.h"
+#include"common.h"
+#include"ship.h"
 using namespace std;
 using boost::asio::ip::tcp;
 
@@ -32,54 +33,85 @@ int main(int argc, char* argv[])
 			cout << "Unable to connect: " << s.error().message() << endl;
 			return EXIT_FAILURE;
 		}
-		//s >> line;
-		//Player player;
+
+		//vector<vector<char>>player_two{10,vector<char>(10,'*')};
+        vector<vector<char>>opponent{10,vector<char>(10,'~')};
+		size_t size = opponent.size();
 		float new_time = 0.0, old_time = 0.0, winner = 0.0;
-		string one_time, time;
+		int trash = 0;
+		string one_time, time, blah;
 		stringstream ss;
 		Jeopardy jeopardy;
+		Battleship battleship;
 		cout<<setw(25)<<"****PLAYER TWO****"<<endl<<endl;
-		cout<<"----------------------------------"<<endl;
-		cout<<"|"<<setw(20)<<"           VOLLEYBALL           "<<"|"<<endl;
-		cout<<"----------------------------------"<<endl<<endl;
+		//Prep for Battleship
+            cout<<"BATTLESHIP PREP PHASE..."<<endl;
+            cout<<"PLAYER ONE WILL BEGIN..."<<endl;
+           	for(size_t i = 0; i < size; i++){
+                    for(size_t j = 0; j < size; j++){
+                        s>>opponent.at(i).at(j);
+                    }
+                }
+            getline(s, blah);
+            cout<<"YOUR TURN..."<<endl;
+            battleship.battleship_setup("TWO");
+            for(size_t i = 0; i < size; i++){
+                    for(size_t j = 0; j < size; j++){
+                        s<<battleship.grid_player_two.at(i).at(j);
+                    }
+                }
+            s<<"HI\n";
+			cout<<endl<<"VOLLEYARDY PHASE..."<<endl;
+			battleship.set_grid_opponent(opponent);
+
 		while(true){
-			cout<<endl<<"PLAYER ONE'S TURN..."<<endl;
-			getline(s,one_time);
-			if(one_time == "WRONG"){
+			//Jeopardy Begins
+			cout<<"PLAYER ONE'S TURN..."<<endl;
+			s>>old_time; //get time
+			getline(s,one_time); //get message
+			if(one_time == "WRONG"){ //Player two battleship
 				cout<<"PLAYER ONE GOT THEIR QUESTION WRONG"<<endl;
-				cout<<"YOU WIN!"<<endl;
-				return 0;
+				cout<<"YOU WIN!"<<endl<<endl;
+				cout<<"ENTERING BATTLESHIP PHASE..."<<endl;
+				battleship.battleship_machine("TWO");
+				s<<0;
+				s<<"HI\n";
 			}
-			if(one_time == "LONG"){
+			if(one_time == "LONG"){ //Player two battleship
 				cout<<"PLAYER ONE TOOK TO LONG"<<endl;
 				cout<<"YOU WIN!"<<endl;
-				return 0;
+				cout<<"ENTERING BATTLESHIP PHASE..."<<endl;
+                battleship.battleship_machine("TWO");
+                s<<0;
+                s<<"HI\n";
 			}
 			cout<<one_time<<endl;
-			for(size_t i = 0; i < one_time.size(); i++){
-				one_time.erase(remove_if(one_time.begin(), one_time.end(), [](char c) { return !isdigit(c); } ), one_time.end());
-			}
-			ss << one_time;
-			ss >> old_time;
-			old_time = old_time*(0.001);
+
+			//Jeopardy Begins
 			jeopardy.jeopardy_machine();
-			if(jeopardy.get_answer() == "WRONG"){ 
+			if(jeopardy.get_answer() == "WRONG"){ //Player one battleship
 				cout<<"PLAYER ONE WINS"<<endl;
-				s<<"WRONG";
-				return 0;
-			}/*else{
-				battleship stuff	
-		 	}
-			*/
+				s<<0;
+				s<<"WRONG\n";
+				cout<<"PLAYER ONE GETS 3 SHOTS IN BATTLESHIP..."<<endl;
+                s>>trash;
+                getline(s,blah);
+			}else{
 			cout<<"Time taken to answer: "<<jeopardy.get_time_to_beat()<<" seconds"<<endl<<endl;
-			new_time = jeopardy.get_time_to_beat(); //plaer two's time
-			if(new_time > old_time){
+			new_time = jeopardy.get_time_to_beat(); //player two's time
+			if(new_time > old_time){ //Player one battleship
 				cout<<"YOU TOOK TO LONG TO ANSWER"<<endl;
 				cout<<"PLAYER ONE WINS"<<endl;
-				s<<"LONG";
-				return 0;
-				} 
-		 	s<<"Time to beat: "<<new_time<<" seconds\n";
+				s<<0;
+				s<<"LONG\n";
+				cout<<"PLAYER ONE GETS 3 SHOTS IN BATTLESHIP..."<<endl;
+                s>>trash;
+                getline(s,blah);
+				}else{ 
+				s<<new_time; //send time
+		 		s<<"Time to beat: "<<new_time<<" seconds\n"; //send message
+				}
+			}
 		}	
 	}
 

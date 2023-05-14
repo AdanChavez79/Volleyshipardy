@@ -14,12 +14,18 @@ class Battleship{
 	private:
 		char ship;
 	public:
-		vector<vector<char>>grid_player_one{10,vector<char>(10,'~')}; //player one's grid
-		vector<vector<char>>grid_player_two{10,vector<char>(10,'~')}; //player two's grid
+	vector<vector<char>>grid_player_one{10,vector<char>(10,'~')}; //player one's grid
+	vector<vector<char>>grid_player_two{10,vector<char>(10,'~')}; //player two's grid
+	vector<vector<char>>grid_opponent{10,vector<char>(10,'~')}; //player two's game grid
+    vector<vector<char>>game_grid{10,vector<char>(10,'~')}; //player one's game grid
 
 		Battleship(){
 			ship = '*';
-}
+		}
+
+	void set_grid_opponent(vector<vector<char>>grid){
+		grid_opponent = grid;
+	}
 
 struct Coord {
     int column;
@@ -69,7 +75,9 @@ Coord readCoordinate(){
                     goodInput = true;
                 }
             }
+			if(input.size() == 3 and input.at(2) != '0'){
             cout << "BAD INPUT" << endl;
+			}
 
         }else {
             cout << "BAD INPUT" << endl;
@@ -120,21 +128,17 @@ void battleship_setup(string player){
 }
 
 void battleship_machine(string player){
-	vector<vector<char>>grid_opponent_one(10,vector<char>(10,'~')); //player two's game grid
-    vector<vector<char>>grid_opponent_two(10,vector<char>(10,'~')); //player one's game grid
-	bool hit = false;
-
     	if(player == "ONE"){
 			cout<<setw(15)<<"Your ocean grid: "<<endl;
 			print_grid(grid_player_one);
 			cout<<setw(10)<<"Opponent's ocean grid: "<<endl;
-			print_grid(grid_opponent_two);
+			print_grid(game_grid);
 		}
     	else{ 
 			cout<<setw(15)<<"Your ocean grid: "<<endl;
             print_grid(grid_player_two);
             cout<<setw(10)<<"Opponent's ocean grid: "<<endl;
-			print_grid(grid_opponent_one);
+			print_grid(game_grid);
 		}
 		cout<<"You get three shots to hit your opponent's ships"<<endl;
 		for(int i = 0; i < 3; i++){
@@ -142,21 +146,21 @@ void battleship_machine(string player){
 			Coord z;
         	z = readCoordinate();
 			 if(player == "ONE"){
-				 if(search_grid(z.column, z.row, grid_player_two)){ //player one's turn
-				 	grid_opponent_two.at(z.row).at(z.column) = '@';
-					grid_player_two.at(z.row).at(z.column) = 'X';
+				 if(search_grid(z.column, z.row, grid_opponent)){ //player one's turn
+				 	game_grid.at(z.row).at(z.column) = '@';
+					grid_opponent.at(z.row).at(z.column) = 'X';
 				 	cout<<"You got a hit!"<<endl;
 				 }else{
-					grid_opponent_two.at(z.row).at(z.column) = 'X';
+					game_grid.at(z.row).at(z.column) = 'X';
 					cout<<"You missed!"<<endl;
 				 }
 			 }else{ 
-                 if(search_grid(z.column, z.row, grid_player_one)){ //player two's turn
-                    grid_opponent_one.at(z.row).at(z.column) = '@';
-					 grid_player_one.at(z.row).at(z.column) = 'X';
-                    cout<<"Yout got a hit!"<<endl;
+                 if(search_grid(z.column, z.row, grid_opponent)){ //player two's turn
+                     game_grid.at(z.row).at(z.column) = '@';
+					 grid_opponent.at(z.row).at(z.column) = 'X';
+                    cout<<"You got a hit!"<<endl;
 				 }else{
-                    grid_opponent_one.at(z.row).at(z.column) = 'X';
+                    game_grid.at(z.row).at(z.column) = 'X';
                     cout<<"You missed!"<<endl;
                  	}
 				}
