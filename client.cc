@@ -74,17 +74,25 @@ int main(int argc, char* argv[])
 				cout<<"YOU WIN!"<<endl<<endl;
 				cout<<"ENTERING BATTLESHIP PHASE..."<<endl;
 				battleship.battleship_machine("TWO");
-				s<<0;
+				for(size_t i = 0; i < size; i++){
+                    for(size_t j = 0; j < size; j++){
+                        s<<battleship.grid_opponent.at(i).at(j);
+                        }
+                    }
 				s<<"HI\n";
 			}
-			if(one_time == "LONG"){ //Player two battleship
+			else if(one_time == "LONG"){ //Player two battleship
 				cout<<"PLAYER ONE TOOK TO LONG"<<endl;
 				cout<<"YOU WIN!"<<endl;
 				cout<<"ENTERING BATTLESHIP PHASE..."<<endl;
                 battleship.battleship_machine("TWO");
-                s<<0;
+                for(size_t i = 0; i < size; i++){
+                    for(size_t j = 0; j < size; j++){
+                        	s<<battleship.grid_opponent.at(i).at(j);
+                        }
+                    }
                 s<<"HI\n";
-			}
+			}else{
 			cout<<one_time<<endl;
 
 			//Jeopardy Begins
@@ -100,7 +108,11 @@ int main(int argc, char* argv[])
 				s<<0;
 				s<<"WRONG\n";
 				cout<<"PLAYER ONE GETS 3 SHOTS IN BATTLESHIP..."<<endl;
-                s>>trash;
+                for(size_t i = 0; i < size; i++){
+                    for(size_t j = 0; j < size; j++){
+                        s>>battleship.grid_player_two.at(i).at(j);
+                        }
+                    }
                 getline(s,blah);
 			}else{
 
@@ -116,11 +128,16 @@ int main(int argc, char* argv[])
 				s<<0;
 				s<<"LONG\n";
 				cout<<"PLAYER ONE GETS 3 SHOTS IN BATTLESHIP..."<<endl;
-                s>>trash;
+				for(size_t i = 0; i < size; i++){
+                    for(size_t j = 0; j < size; j++){
+                        s>>battleship.grid_player_two.at(i).at(j);
+                        }
+                    }
                 getline(s,blah);
 				}else{ 
 				s<<new_time; //send time
 		 		s<<"Time to beat: "<<new_time<<" seconds\n"; //send message
+				}
 				}
 			}
 		}	

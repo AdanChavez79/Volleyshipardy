@@ -1,7 +1,7 @@
 #include<iostream>
 #include<iomanip>
 #include<vector>
-#include"/public/read.h"
+#include"read.h"
 
 using std::string;
 using std::cout;
@@ -27,6 +27,8 @@ class Battleship{
 		grid_opponent = grid;
 	}
 
+// Huh, Its usually X an Y, not really columns and rows
+
 struct Coord {
     int column;
     int row;
@@ -50,8 +52,10 @@ void print_grid(vector<vector<char>>&grid){
     cout<<endl;
 }
 
-bool search_grid(int col, int row, const vector<vector<char>>&grid){
-     if(grid.at(row).at(col) == '*'){ return true;}
+bool search_grid(int col, int row, vector<vector<char>>&grid){
+	if(grid.at(row).at(col) == '*'){
+		grid_opponent.at(row).at(col) = 'X';
+		return true; }
      return false;
 }
 

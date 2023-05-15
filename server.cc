@@ -12,18 +12,19 @@
 #include <iostream>
 #include <string>
 #include <boost/asio.hpp>
-#include "/public/read.h"
-#include"common.h"
-#include"ship.h"
+#include "read.h"
+#include "common.h"
+#include "ship.h"
+#include "jeopardy.h"
 using namespace std;
 using boost::asio::ip::tcp;
 
-string make_daytime_string()
+/*string make_daytime_string()
 {
 	using namespace std; // For time_t, time and ctime;
 	time_t now = time(0);
 	return ctime(&now);
-}
+}*/
 
 int main()
 {
@@ -40,7 +41,12 @@ int main()
 			boost::system::error_code ec;
 			acceptor.accept(stream.socket(), ec);
 			if (!ec)
-			{
+			{	//To Do:
+				//Check for bugs/vetting
+				//Clean up interface
+				//Make it fancy
+
+
 				//stream << make_daytime_string();
 				//vector<vector<char>>player_one{10,vector<char>(10,'~')};
         		vector<vector<char>>opponent{10,vector<char>(10,'~')};
@@ -67,7 +73,7 @@ int main()
                     for(size_t j = 0; j < size; j++){
                         stream>>opponent.at(i).at(j);
                     	}
-                	}
+					}
                     getline(stream, blah);
                     cout<<endl<<"VOLLEYARDY PHASE..."<<endl;
 					battleship.set_grid_opponent(opponent);
@@ -81,9 +87,13 @@ int main()
 						stream<<0;
 						stream<<"WRONG\n";
 						cout<<"PLAYER TWO GETS 3 SHOTS IN BATTLESHIP..."<<endl;
-						stream>>trash;
+						for(size_t i = 0; i < size; i++){
+                    		for(size_t j = 0; j < size; j++){
+                        		stream>>battleship.grid_player_one.at(i).at(j);
+                        	}
+                    	}
 						getline(stream,blah);
-					}
+					}else{
 					if(count != 0){
 					if(new_time > old_time){ //Player two gets to shoot
                         cout<<"YOU TOOK TO LONG"<<endl;
@@ -91,7 +101,11 @@ int main()
 						stream<<0;
                         stream<<"LONG\n"<<endl;
                         cout<<"PLAYER TWO GETS 3 SHOTS IN BATTLESHIP..."<<endl;
-                        stream>>trash;
+                        for(size_t i = 0; i < size; i++){
+                    		for(size_t j = 0; j < size; j++){
+                        	stream>>battleship.grid_player_one.at(i).at(j);
+                        	}
+                    	}
 						getline(stream,blah);
                         }
 					}
@@ -106,18 +120,27 @@ int main()
 						cout<<"YOU WIN!"<<endl<<endl;
                 		cout<<"ENTERING BATTLESHIP PHASE..."<<endl;
                 		battleship.battleship_machine("ONE");
-                		stream<<0;
+                		for(size_t i = 0; i < size; i++){
+                    	for(size_t j = 0; j < size; j++){
+                        	stream<<battleship.grid_opponent.at(i).at(j);
+                        }
+                    	}
                 		stream<<"HI\n";
 					}else if(two_time == "LONG"){ //Player one gets to shoot
 						cout<<"PLAYER TWO TOOK TO LONG"<<endl;
 						cout<<"YOU WIN!"<<endl<<endl;
                 		cout<<"ENTERING BATTLESHIP PHASE..."<<endl;
                 		battleship.battleship_machine("ONE");
-                		stream<<0;
+                		for(size_t i = 0; i < size; i++){
+                    	for(size_t j = 0; j < size; j++){
+                        	stream<<battleship.grid_opponent.at(i).at(j);
+                        	}
+                    	}
                 		stream<<"HI\n";
 					}else{
 						cout<<two_time<<endl;
 						count++;
+					}
 					}
 				}
       }
