@@ -24,6 +24,12 @@ using namespace std;
 
 
 int main(){
+
+
+	  setcolor(135, 206, 250);
+	 cout << "Hello World" << RESET << endl;
+
+
 	//	Jeopardy j;
 	//	j.jeopardy_machine();
 
@@ -145,5 +151,5 @@ if(win == 5) { //Way to win the game -> change?
 count++;
 }*/
 
-//return 0;
-//}
+return 0;
+}

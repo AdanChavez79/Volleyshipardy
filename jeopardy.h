@@ -92,6 +92,7 @@ class Jeopardy{
 				
 				auto start = clock::now();
 				std::cout<<question;
+			//	setcolor(135,206,250);
 				if(random_question == 1){ //random question sequence
 					std::cout<<"A. "<<correct<<endl;
 					std::cout<<"B. "<<wrong1<<endl;
@@ -167,6 +168,7 @@ class Jeopardy{
 						set_answer("WRONG");
 					}
 				}
+		//		cout << RESET;
 
 				set_time_to_beat(duration_cast<milliseconds>(end-start).count());
 			//	count++;
@@ -190,7 +192,8 @@ class Jeopardy{
 					outs << '\n';
 					++i;
 				}
-				else{ outs << rhs.question.at(i);} 
+				else{setcolor(255, 255, 0); 
+					outs <<rhs.question.at(i) << RESET;} 
 			}
 			outs << std::endl;
 			return outs;

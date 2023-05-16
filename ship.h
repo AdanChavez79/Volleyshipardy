@@ -2,6 +2,7 @@
 #include<iomanip>
 #include<vector>
 #include"read.h"
+#include"colors.h"
 
 using std::string;
 using std::cout;
@@ -35,17 +36,30 @@ struct Coord {
 };
 
 void print_grid(vector<vector<char>>&grid){
-    cout << "  ";
+	setcolor(255, 153, 153);
+	cout << "X " << RESET;
     for (size_t z = 0 ; z < grid.size(); z++){
-        cout << z + 1  << " ";
+		setcolor(255, 255, 153);
+        cout << z + 1  << " " << RESET;
     }
     cout << endl;
 
     for (size_t i = 0; i < grid.size(); i++) {
-        cout << static_cast<char>('A' + i) << " ";
+		setcolor(255, 255, 153);
+        cout << static_cast<char>('A' + i) << " " << RESET;
         for (size_t j = 0; j < grid.at(i).size(); j++) {
             if(grid.at(i).at(j) == -1){ cout << " "; }
-            else { cout << grid.at(i).at(j) << " "; }
+            else { 
+				if(grid.at(i).at(j) == '~'){
+					setcolor(135,206,250);
+				} else if (grid.at(i).at(j) == 'X'){
+					setcolor(250, 0, 0);
+				} else if (grid.at(i).at(j) == '@'){
+					setcolor(255, 255, 0);
+				} else if (grid.at(i).at(j) == '*'){
+					setcolor(255,255,0);
+				}
+				cout << grid.at(i).at(j) << " " << RESET; }
         }
         cout << endl;
     }
@@ -85,18 +99,19 @@ Coord readCoordinate(string player){
             }
 			if(input.size() == 3 and input.at(2) != '0'){
 				goodInput = false;
-            	cout << "BAD INPUT" << endl;
+            	cout << RED << "BAD INPUT" << RESET << endl;
 			}
 
         }else {
 			goodInput = false;
-            cout << "BAD INPUT" << endl;
+            cout << RED <<  "BAD INPUT" << RESET << endl;
         }
 
 
 		 if(goodInput == true and player == "ONE"){
             if(find(pastInputs.begin(), pastInputs.end(), input) != pastInputs.end()){
-                cout << "You already entered this >:[ " << endl;
+                setcolor(255, 102, 102);
+				cout <<"You already entered this >:[ " << RESET <<  endl;
                 goodInput = false;
             } else {
                 pastInputs.push_back(input);
@@ -105,7 +120,8 @@ Coord readCoordinate(string player){
 
         if(goodInput == true and player != "ONE"){
             if(find(pastInputs2.begin(), pastInputs2.end(), input) != pastInputs2.end()){
-                cout << "You already entered this >:[ " << endl;
+                setcolor(255, 102, 102);
+				cout <<"You already entered this >:[ " << RESET << endl;
                 goodInput = false;
             } else {
                 pastInputs2.push_back(input);
@@ -117,7 +133,9 @@ Coord readCoordinate(string player){
     Coord x;
     x.column = c -1;
     x.row = r - 1;
-    cout << "GOOD INPUT" << endl;
+	
+	//setcolor(255, 255, 153);
+	//cout <<"GOOD INPUT" << RESET << endl;
     return x;
 
 }
@@ -126,6 +144,8 @@ void battleship_setup(string player){
 	cout<<"----------------------------------"<<endl;
     cout<<"|"<<setw(20)<<"           BATTLESHIP           "<<"|"<<endl;
     cout<<"----------------------------------"<<endl<<endl;
+	
+	setcolor(255, 255, 0);
 
 	cout<<"Each ship can only be placed in a HORIZONTAL or VERTICAL position!"<<endl<<endl;
 
@@ -157,6 +177,7 @@ void battleship_setup(string player){
 	else{ print_grid(grid_player_two);}
 	pastInputs.clear();
     pastInputs2.clear();
+	cout << RESET;
 }
 
 void battleship_machine(string player){
@@ -181,19 +202,23 @@ void battleship_machine(string player){
 				 if(search_grid(z.column, z.row, grid_opponent)){ //player one's turn
 				 	game_grid.at(z.row).at(z.column) = '@';
 					grid_opponent.at(z.row).at(z.column) = 'X';
-				 	cout<<"You got a hit!"<<endl;
+				 	setcolor(255, 255, 0);
+					cout<<"You got a hit!"<< RESET <<endl;
 				 }else{
 					game_grid.at(z.row).at(z.column) = 'X';
-					cout<<"You missed!"<<endl;
+					setcolor(255, 102, 102);
+					cout<<"You missed!"<< RESET<< endl;
 				 }
 			 }else{ 
                  if(search_grid(z.column, z.row, grid_opponent)){ //player two's turn
                      game_grid.at(z.row).at(z.column) = '@';
 					 grid_opponent.at(z.row).at(z.column) = 'X';
-                    cout<<"You got a hit!"<<endl;
+                    setcolor(255, 255, 0);
+					 cout<< "You got a hit!"<<RESET<<endl;
 				 }else{
                     game_grid.at(z.row).at(z.column) = 'X';
-                    cout<<"You missed!"<<endl;
+					setcolor(255, 102, 102);
+                    cout<< "You missed!"<< RESET << endl;
                  	}
 				}
 			 if(i+1 == 3){ 
