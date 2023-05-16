@@ -51,7 +51,7 @@ bool search_grid(int col, int row, const vector<vector<char>>&grid){
 vector<string> pastInputs;
 vector<string> pastInputs2;
 
-Coord readCoordinate(int count){
+Coord readCoordinate(string player){
 	bool goodInput = false;
 	int r;
 	int c;
@@ -81,7 +81,7 @@ Coord readCoordinate(int count){
 			cout << "BAD INPUT" << endl;
 		}
 
-		if(goodInput == true and count == 0){
+		if(goodInput == true and player == "ONE"){
 			if(find(pastInputs.begin(), pastInputs.end(), input) != pastInputs.end()){
 				cout << "You already entered this >:[ " << endl;
 				goodInput = false;
@@ -90,7 +90,7 @@ Coord readCoordinate(int count){
 			}
 		}
 
-		if(goodInput == true and count == 1){
+		if(goodInput == true and player != "ONE"){
             if(find(pastInputs2.begin(), pastInputs2.end(), input) != pastInputs2.end()){
                 cout << "You already entered this >:[ " << endl;
                 goodInput = false;
@@ -141,7 +141,7 @@ int main(){
 //		column-=1;
 //		row-=1;
 		Coord c;
-		c = readCoordinate(count);
+		c = readCoordinate(player);
 		if(count == 0){grid_player_one.at(c.row).at(c.column) = '*';}
         else{ grid_player_two.at(c.row).at(c.column) = '*';}
 	}
@@ -152,7 +152,7 @@ int main(){
 //		column-=1;
 //		row-=1;
 		Coord c;
-		c = readCoordinate(count);
+		c = readCoordinate(player);
         if(count == 0){grid_player_one.at(c.row).at(c.column) = '*';}
         else{ grid_player_two.at(c.row).at(c.column) = '*';}
 	}
@@ -163,7 +163,7 @@ int main(){
 //		column-=1;
 //		row-=1;
 		Coord c;
-		c = readCoordinate(count);
+		c = readCoordinate(player);
         if(count == 0){grid_player_one.at(c.row).at(c.column) = '*';}
 		else{ grid_player_two.at(c.row).at(c.column) = '*';}
     }
@@ -203,7 +203,7 @@ int main(){
 	//		row-=1;
 
 			Coord z;
-        	z = readCoordinate(count);
+        	z = readCoordinate(player);
 			 if(count == 0){
 				 if(search_grid(z.column, z.row, grid_player_two)){ //player one's turn
 				 	grid_opponent_two.at(z.row).at(z.column) = '@';

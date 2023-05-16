@@ -14,6 +14,7 @@
 #include <boost/asio.hpp>
 #include"common.h"
 #include"ship.h"
+#include"jeopardy.h"
 using namespace std;
 using boost::asio::ip::tcp;
 
@@ -99,12 +100,6 @@ int main(int argc, char* argv[])
 			jeopardy.jeopardy_machine();
 			if(jeopardy.get_answer() == "WRONG"){ //Player one battleship
 				cout<<"PLAYER ONE WINS"<<endl;
-				s<<"WRONG";
-				return 0;
-			}/*else{
-			   battleship stuff	
-			   }
-			   */
 				s<<0;
 				s<<"WRONG\n";
 				cout<<"PLAYER ONE GETS 3 SHOTS IN BATTLESHIP..."<<endl;
@@ -121,10 +116,6 @@ int main(int argc, char* argv[])
 			if(new_time > old_time){ //Player one battleship
 				cout<<"YOU TOOK TO LONG TO ANSWER"<<endl;
 				cout<<"PLAYER ONE WINS"<<endl;
-				s<<"LONG";
-				return 0;
-			} 
-			s<<"Time to beat: "<<new_time<<" seconds\n";
 				s<<0;
 				s<<"LONG\n";
 				cout<<"PLAYER ONE GETS 3 SHOTS IN BATTLESHIP..."<<endl;

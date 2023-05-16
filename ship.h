@@ -59,7 +59,11 @@ bool search_grid(int col, int row, vector<vector<char>>&grid){
      return false;
 }
 
-Coord readCoordinate(){
+vector<string> pastInputs;
+vector<string> pastInputs2;
+
+
+Coord readCoordinate(string player){
     bool goodInput = false;
     int r;
     int c;
@@ -80,12 +84,34 @@ Coord readCoordinate(){
                 }
             }
 			if(input.size() == 3 and input.at(2) != '0'){
-            cout << "BAD INPUT" << endl;
+				goodInput = false;
+            	cout << "BAD INPUT" << endl;
 			}
 
         }else {
+			goodInput = false;
             cout << "BAD INPUT" << endl;
         }
+
+
+		 if(goodInput == true and player == "ONE"){
+            if(find(pastInputs.begin(), pastInputs.end(), input) != pastInputs.end()){
+                cout << "You already entered this >:[ " << endl;
+                goodInput = false;
+            } else {
+                pastInputs.push_back(input);
+            }
+        }
+
+        if(goodInput == true and player != "ONE"){
+            if(find(pastInputs2.begin(), pastInputs2.end(), input) != pastInputs2.end()){
+                cout << "You already entered this >:[ " << endl;
+                goodInput = false;
+            } else {
+                pastInputs2.push_back(input);
+            }
+        }
+
     }
 
     Coord x;
@@ -108,27 +134,29 @@ void battleship_setup(string player){
 	cout<<"PLAYER "<<player<<" please place your DESTROYER (2 spots)"<<endl;
 	for(int i = 0; i < 2; i++){
 		Coord c;
-		c = readCoordinate();
+		c = readCoordinate(player);
 		if(player == "ONE"){grid_player_one.at(c.row).at(c.column) = '*';}
         else{ grid_player_two.at(c.row).at(c.column) = '*';}
 	}
 	cout<<"PLAYER "<<player<<" please place your CRUSIER (3 spots)"<<endl;
 	for(int i = 0; i < 3; i++){
 		Coord c;
-		c = readCoordinate();
+		c = readCoordinate(player);
         if(player == "ONE"){grid_player_one.at(c.row).at(c.column) = '*';}
         else{ grid_player_two.at(c.row).at(c.column) = '*';}
 	}
 	cout<<"PLAYER "<<player<<" please place your BATTLESHIP (4 spots)"<<endl;
 	for(int i = 0; i < 4; i++){
 		Coord c;
-		c = readCoordinate();
+		c = readCoordinate(player);
         if(player == "ONE"){grid_player_one.at(c.row).at(c.column) = '*';}
 		else{ grid_player_two.at(c.row).at(c.column) = '*';}
     }
 	cout<<setw(5)<<"PLAYER "<<player<<"'S ocean grid"<<endl;
 	if(player == "ONE"){ print_grid(grid_player_one);}
 	else{ print_grid(grid_player_two);}
+	pastInputs.clear();
+    pastInputs2.clear();
 }
 
 void battleship_machine(string player){
@@ -148,7 +176,7 @@ void battleship_machine(string player){
 		for(int i = 0; i < 3; i++){
 			cout<<"Enter the coordinates for shot "<<i+1<<endl;
 			Coord z;
-        	z = readCoordinate();
+        	z = readCoordinate(player);
 			 if(player == "ONE"){
 				 if(search_grid(z.column, z.row, grid_opponent)){ //player one's turn
 				 	game_grid.at(z.row).at(z.column) = '@';
